@@ -75,9 +75,9 @@ export default function MDXContent({ slug }: Props) {
               </div>
 
               {/* 3. Content */}
-              {frontmatter.excerpt && (
+              {frontmatter.content && (
                 <div className="prose prose-invert max-w-none">
-                  <p>{frontmatter.excerpt}</p>
+                  <p>{frontmatter.content}</p>
                 </div>
               )}
 
