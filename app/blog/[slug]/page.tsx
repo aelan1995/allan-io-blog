@@ -3,7 +3,13 @@ import path from "path";
 import fs from "fs/promises";
 import BlogRenderer from "../../../components/BlogRenderer";
 
-export async function generateStaticParams() {
+type Params = {
+  params: {
+    slug: string;
+  };
+};
+
+export async function generateStaticParams(): Promise<{ slug: string }[]> {
   const dir = path.join(process.cwd(), "content/blog");
   const files = await fs.readdir(dir);
 
@@ -12,9 +18,14 @@ export async function generateStaticParams() {
     .map((file) => ({ slug: file.replace(".mdx", "") }));
 }
 
-// ✅ define Page separately
-async function BlogPostPage({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+export async function generateMetadata({ params }: Params) {
+  return {
+    title: params.slug.replace(/-/g, " "),
+  };
+}
+
+export default async function Page({ params }: Params) {
+  const slug = params.slug;
   const filePath = path.join(process.cwd(), "content/blog", `${slug}.mdx`);
 
   try {
@@ -25,5 +36,3 @@ async function BlogPostPage({ params }: { params: { slug: string } }) {
 
   return <BlogRenderer slug={slug} />;
 }
-
-export default BlogPostPage;
