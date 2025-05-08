@@ -7,7 +7,7 @@ export default async function Home() {
 
   return (
     <main className="bg-slate-900 text-white min-h-screen font-sans flex flex-col">
-      {/* Navbar */}
+      {/* Navbar Test*/}
       <Navbar />
 
       {/* Blog Posts */}
