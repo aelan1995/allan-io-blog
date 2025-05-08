@@ -13,7 +13,7 @@ export async function generateStaticParams() {
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {
-  const { slug } = await params; // ✅ Correct usage
+  const { slug } = params; // ✅ Correct usage
 
   const filePath = path.join(process.cwd(), "content/blog", `${slug}.mdx`);
   try {
