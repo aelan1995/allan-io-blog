@@ -12,8 +12,9 @@ export async function generateStaticParams() {
     .map((file) => ({ slug: file.replace(".mdx", "") }));
 }
 
+// ✅ FIXED: Removed incorrect `await` on params
 export default async function Page({ params }: { params: { slug: string } }) {
-  const { slug } = params; // ✅ Correct usage
+  const slug = params.slug;
 
   const filePath = path.join(process.cwd(), "content/blog", `${slug}.mdx`);
   try {
