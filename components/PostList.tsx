@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { PostMeta } from "../lib/getPosts";
+import Image from "next/image";
 
 export default function PostList({ posts }: { posts: PostMeta[] }) {
   return (
@@ -18,9 +19,11 @@ export default function PostList({ posts }: { posts: PostMeta[] }) {
           <Link href={`/blog/${post.slug}`} className="block group">
             <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-lg hover:shadow-blue-800/30 transition-shadow duration-300">
               {post.coverImage && (
-                <img
+                <Image
                   src={post.coverImage}
                   alt={post.title}
+                  width={800} // or appropriate dimensions
+                  height={320}
                   className="w-full h-56 object-cover transition group-hover:opacity-90"
                 />
               )}
