@@ -8,15 +8,26 @@ interface Props {
   slug: string;
 }
 
+interface Frontmatter {
+  title: string;
+  date: string;
+  excerpt?: string;
+  tags?: string[];
+  coverImage?: string;
+  author?: string;
+  authorImage?: string;
+  content?: string;
+}
+
 export default function MDXContent({ slug }: Props) {
-  const [frontmatter, setFrontmatter] = useState<any>(null);
+  const [frontmatter, setFrontmatter] = useState<Frontmatter | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadPost = async () => {
       try {
         const mod = await import(`../content/blog/${slug}.mdx`);
-        setFrontmatter(mod.frontmatter || {});
+        setFrontmatter(mod.frontmatter as Frontmatter);
       } catch (err) {
         console.error("Error loading MDX:", err);
         setError("Post not found.");
@@ -46,7 +57,7 @@ export default function MDXContent({ slug }: Props) {
               {frontmatter.authorImage && (
                 <Image
                   src={frontmatter.authorImage}
-                  alt={frontmatter.author}
+                  alt={frontmatter.author ?? "Author image"}
                   width={100}
                   height={100}
                   className="rounded-full mb-3"
@@ -80,7 +91,7 @@ export default function MDXContent({ slug }: Props) {
               )}
 
               {/* 4. Tags */}
-              {frontmatter.tags?.length > 0 && (
+              {frontmatter.tags && frontmatter.tags.length > 0 && (
                 <div className="flex flex-wrap gap-2 pt-2">
                   {frontmatter.tags.map((tag: string) => (
                     <span
