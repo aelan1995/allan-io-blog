@@ -9,7 +9,6 @@ interface Props {
 }
 
 export default function MDXContent({ slug }: Props) {
-  const [Post, setPost] = useState<React.ComponentType | null>(null);
   const [frontmatter, setFrontmatter] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -17,7 +16,6 @@ export default function MDXContent({ slug }: Props) {
     const loadPost = async () => {
       try {
         const mod = await import(`../content/blog/${slug}.mdx`);
-        setPost(() => mod.default);
         setFrontmatter(mod.frontmatter || {});
       } catch (err) {
         console.error("Error loading MDX:", err);
