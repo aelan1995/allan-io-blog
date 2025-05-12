@@ -4,7 +4,9 @@ import { format } from "date-fns";
 
 export async function GET() {
   const baseUrl = "https://allan-io-blog.vercel.app";
-  const posts = getPosts();
+
+  // Provide pagination arguments to getPosts and destructure the returned object
+  const { posts } = getPosts(1, 100); // Assuming you want to fetch the first 100 posts
 
   const staticUrls = ["", "/blog"];
 
@@ -12,7 +14,7 @@ export async function GET() {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${staticUrls
   .map(
-    (path) => `
+    (path) => `  
   <url>
     <loc>${baseUrl}${path}</loc>
     <priority>1.0</priority>
@@ -21,7 +23,7 @@ ${staticUrls
   .join("")}
 ${posts
   .map(
-    (post) => `
+    (post: { slug: string; date: string }) => `  
   <url>
     <loc>${baseUrl}/blog/${post.slug}</loc>
     <lastmod>${format(new Date(post.date), "yyyy-MM-dd")}</lastmod>
