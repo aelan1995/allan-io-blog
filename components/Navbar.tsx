@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import AboutModalTrigger from "../components/AboutModal";
-import TypingHeader from "../components/TypingHeader";
+import Header from "./Header";
 
 export default function Navbar() {
   return (
@@ -16,7 +16,7 @@ export default function Navbar() {
         >
           <Image src="/logos/logo1.png" alt="Logo" width={200} height={200} />
         </Link>
-        <TypingHeader />
+        <Header />
         {/* Centered Links (on right) */}
         <AboutModalTrigger />
       </div>
