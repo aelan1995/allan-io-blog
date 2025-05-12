@@ -1,8 +1,6 @@
-// hooks/useTypesense.ts
 import Typesense from "typesense";
-import { PostMeta } from "../lib/getPosts";
+import { PostMeta } from "./getPosts"; // adjust if needed
 
-// Initialize Typesense client
 const client = new Typesense.Client({
   nodes: [
     {
@@ -15,17 +13,15 @@ const client = new Typesense.Client({
   connectionTimeoutSeconds: 2,
 });
 
-// Define the search function
-export const useTypesense = async (query: string): Promise<PostMeta[]> => {
+export async function typesenseSearch(query: string): Promise<PostMeta[]> {
   try {
     const searchResults = await client.collections("posts").documents().search({
       q: query,
-      query_by: "title,content", // You can adjust the query parameters
+      query_by: "title,content,tags",
     });
 
-    // Check if 'hits' is defined and map the results to the PostMeta structure
-    if (searchResults && searchResults.hits) {
-      return searchResults.hits.map((hit: any) => ({
+    return (
+      searchResults.hits?.map((hit: any) => ({
         slug: hit.document.slug,
         title: hit.document.title,
         date: hit.document.date,
@@ -35,13 +31,10 @@ export const useTypesense = async (query: string): Promise<PostMeta[]> => {
         author: hit.document.author,
         authorImage: hit.document.authorImage,
         content: hit.document.content,
-      }));
-    }
-
-    // Return an empty array if no hits found
-    return [];
+      })) ?? []
+    );
   } catch (error) {
-    console.error("Error fetching search results from Typesense:", error);
+    console.error("❌ Typesense search error:", error);
     return [];
   }
-};
+}

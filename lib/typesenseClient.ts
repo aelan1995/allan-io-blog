@@ -1,17 +1,23 @@
-// lib/typesenseClient.ts
-const Typesense = require("typesense");
-require("dotenv").config();
+import Typesense from "typesense";
 
-const client = new Typesense.Client({
+// ✅ Validate or assert environment variables
+const host = process.env.NEXT_PUBLIC_TYPESENSE_HOST;
+const port = process.env.NEXT_PUBLIC_TYPESENSE_PORT;
+const protocol = process.env.NEXT_PUBLIC_TYPESENSE_PROTOCOL;
+const apiKey = process.env.NEXT_PUBLIC_TYPESENSE_SEARCH_ONLY_KEY;
+
+if (!host || !port || !protocol || !apiKey) {
+  throw new Error("Missing required Typesense environment variables");
+}
+
+export const typesenseClient = new Typesense.Client({
   nodes: [
     {
-      host: process.env.TYPESENSE_HOST,
-      port: Number(process.env.TYPESENSE_PORT),
-      protocol: process.env.TYPESENSE_PROTOCOL,
+      host,
+      port: Number(port),
+      protocol,
     },
   ],
-  apiKey: process.env.TYPESENSE_API_KEY,
-  connectionTimeoutSeconds: 5,
+  apiKey,
+  connectionTimeoutSeconds: 2,
 });
-
-module.exports = { typesenseClient: client }; // ✅ alias it during export

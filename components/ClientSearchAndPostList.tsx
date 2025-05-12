@@ -5,7 +5,7 @@ import Search from "./Search";
 import PostList from "./PostList";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import { useTypesense } from "../hooks/useTypesense";
+import { typesenseSearch } from "@/lib/typesenseSearch";
 import type { PostMeta } from "@/lib/getPosts";
 
 interface Props {
@@ -27,7 +27,7 @@ export default function ClientSearchAndPostList({
     error,
   } = useQuery<PostMeta[], Error>({
     queryKey: ["searchPosts", searchQuery],
-    queryFn: () => useTypesense(searchQuery),
+    queryFn: () => typesenseSearch(searchQuery),
     enabled: searchQuery.trim().length > 0,
   });
 
