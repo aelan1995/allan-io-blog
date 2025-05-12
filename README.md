@@ -38,7 +38,7 @@ Open [http://localhost:3000](http://localhost:3000) to see the result.
 
 ## 🛠 File Structure
 
-- `content/blog/YYYY/MM/` — Directory for generated `.mdx` posts
+- `content/blog/` — Directory for generated `.mdx` posts
 - `app/page.tsx` — Main landing page
 - `components/` — Shared UI components
 - `lib/getPosts.ts` — Fetches and parses MDX posts
