@@ -1,5 +1,11 @@
 import Typesense from "typesense";
-import { PostMeta } from "./getPosts"; // adjust if needed
+import { PostMeta } from "./getPosts";
+
+type PostDocument = PostMeta & { content: string };
+
+interface TypesenseHit {
+  document: PostDocument;
+}
 
 const client = new Typesense.Client({
   nodes: [
@@ -20,8 +26,10 @@ export async function typesenseSearch(query: string): Promise<PostMeta[]> {
       query_by: "title,content,tags",
     });
 
+    const hits = (searchResults as { hits?: TypesenseHit[] }).hits;
+
     return (
-      searchResults.hits?.map((hit: any) => ({
+      hits?.map((hit) => ({
         slug: hit.document.slug,
         title: hit.document.title,
         date: hit.document.date,
