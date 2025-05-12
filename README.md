@@ -1,10 +1,10 @@
-Here’s an updated and more tailored `README.md` for your `allan-io-blog` project:
+Here’s your updated `README.md`, now with **Typesense search** and **TanStack Query** integration included:
 
 ---
 
 # 🧠 Allan IO Blog — AI-Powered Blog Automation
 
-This is a [Next.js](https://nextjs.org) blog project that automates blog post generation and publication using AI. It is integrated with a Django REST API backend that generates `.mdx` content daily, stores it in PostgreSQL, and pushes the files into this frontend project. The frontend is deployed via Vercel.
+This is a [Next.js](https://nextjs.org) blog project that automates blog post generation and publication using AI. It integrates with a Django REST API backend that generates `.mdx` content daily, stores it in PostgreSQL, and pushes the files into this frontend project. The frontend is deployed via Vercel.
 
 ## ✨ Features
 
@@ -12,9 +12,17 @@ This is a [Next.js](https://nextjs.org) blog project that automates blog post ge
 - AI-generated blog content via **OpenAI API**
 - Posts stored in **PostgreSQL**, served as `.mdx` files
 - Frontmatter + `export const frontmatter` dual support for MDX
+- Search powered by **Typesense** (instant full-text search)
+- Optimized data fetching with **TanStack Query**
 - Uses **Tailwind CSS** for styling
 - Responsive and animated using **Framer Motion**
-- Posts organized by year and month: `/content/blog/slug.mdx`
+- Posts organized by year and month: `/content/blog/YYYY/MM/slug.mdx`
+
+## 🔍 Search
+
+Search is implemented using [Typesense](https://typesense.org) with a daily sync of blog content. Blog posts are indexed for fields like `title`, `content`, and `tags`.
+
+> GitHub Actions run every day at **12:30 AM Philippine Time** to sync content into Typesense automatically.
 
 ## 🚀 Getting Started
 
@@ -40,9 +48,12 @@ Open [http://localhost:3000](http://localhost:3000) to see the result.
 
 - `content/blog/` — Directory for generated `.mdx` posts
 - `app/page.tsx` — Main landing page
+- `app/blog/[slug]/page.tsx` — Dynamic MDX post renderer
 - `components/` — Shared UI components
 - `lib/getPosts.ts` — Fetches and parses MDX posts
-- `public/` — Static assets (images, logos)
+- `hooks/useTypesense.ts` — Client hook for Typesense search
+- `scripts/syncPostsToTypesense.ts` — Syncs content to Typesense
+- `.github/workflows/sync-typesense.yml` — Daily GitHub Action runner
 
 ## 📦 Deployment
 
@@ -61,9 +72,9 @@ To manually deploy:
 
 - [Next.js Docs](https://nextjs.org/docs)
 - [MDX Docs](https://mdxjs.com)
+- [Typesense Docs](https://typesense.org/docs/)
+- [TanStack Query](https://tanstack.com/query/latest)
 - [Tailwind CSS](https://tailwindcss.com)
 - [Framer Motion](https://www.framer.com/motion/)
 
 ---
-
-Would you like me to include badges (e.g., Vercel status, license) or example blog screenshots in the README too?

@@ -12,9 +12,9 @@ export async function generateStaticParams() {
     .map((file) => ({ slug: file.replace(".mdx", "") }));
 }
 
-// ✅ define Page separately
-async function BlogPostPage({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+export default async function Page(props: { params: Record<string, string> }) {
+  const { slug } = await Promise.resolve(props.params); // ✅ Await `params` object
+
   const filePath = path.join(process.cwd(), "content/blog", `${slug}.mdx`);
 
   try {
@@ -25,5 +25,3 @@ async function BlogPostPage({ params }: { params: { slug: string } }) {
 
   return <BlogRenderer slug={slug} />;
 }
-
-export default BlogPostPage;

@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { PostMeta } from "../lib/getPosts";
+import type { PostMeta } from "@/lib/getPosts";
 import Image from "next/image";
 
+// Client component for rendering posts with animations
 export default function PostList({ posts }: { posts: PostMeta[] }) {
   return (
     <section className="max-w-3xl mx-auto px-6 py-12 space-y-12">
@@ -22,7 +23,7 @@ export default function PostList({ posts }: { posts: PostMeta[] }) {
                 <Image
                   src={post.coverImage}
                   alt={post.title}
-                  width={800} // or appropriate dimensions
+                  width={800} // Adjust based on your image dimensions
                   height={320}
                   className="w-full h-56 object-cover transition group-hover:opacity-90"
                 />

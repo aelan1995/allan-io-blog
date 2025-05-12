@@ -1,7 +1,5 @@
 import "./globals.css";
-
 import { Lato } from "next/font/google";
-
 import { Analytics } from "@vercel/analytics/next";
 
 const lato = Lato({
@@ -17,8 +15,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={lato.className}>
-      <Analytics />
-      <body className="text-white">{children}</body>
+      <body className="text-white">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }

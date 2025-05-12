@@ -1,24 +1,38 @@
-import { getPosts } from "../lib/getPosts";
-import PostList from "../components/PostList";
-import Navbar from "../components/Navbar";
+"use client";
 
-export default async function Home() {
-  const posts = getPosts();
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { getPosts } from "@/lib/getPostsClient"; // 👈 must be a client-friendly version
+import ClientWrapper from "@/components/ClientWrapper";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { PostMeta } from "@/lib/getPosts";
+
+export default function Home() {
+  const params = useSearchParams();
+  const pageParam = params.get("page") ?? "1";
+  const [posts, setPosts] = useState<PostMeta[]>([]);
+  const [totalPages, setTotalPages] = useState(1);
+
+  useEffect(() => {
+    const currentPage = parseInt(pageParam, 10);
+    getPosts(currentPage, 2).then((res) => {
+      setPosts(res.posts);
+      setTotalPages(res.totalPages);
+    });
+  }, [pageParam]);
+
+  const currentPage = parseInt(pageParam, 10);
 
   return (
     <main className="bg-slate-900 text-white min-h-screen font-sans flex flex-col">
-      {/* Navbar Test*/}
       <Navbar />
-
-      {/* Blog Posts */}
-      <div className="flex-grow">
-        <PostList posts={posts} />
-      </div>
-
-      {/* Footer */}
-      <footer className="text-center text-sm text-gray-600 py-6 border-t border-slate-800">
-        © 2025 Allan.io
-      </footer>
+      <ClientWrapper
+        posts={posts}
+        currentPage={currentPage}
+        totalPages={totalPages}
+      />
+      <Footer />
     </main>
   );
 }

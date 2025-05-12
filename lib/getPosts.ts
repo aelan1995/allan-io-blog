@@ -10,26 +10,52 @@ export interface PostMeta {
   slug: string;
   coverImage?: string;
   tags?: string[];
+  author?: string;
+  authorImage?: string;
 }
 
-export function getPosts(): PostMeta[] {
+export function getPosts(
+  page: number,
+  pageSize: number
+): {
+  posts: PostMeta[];
+  totalPages: number;
+} {
   const directory = path.join(process.cwd(), "content/blog");
-  const files = fs.readdirSync(directory);
+  const files = fs
+    .readdirSync(directory)
+    .filter((file) => file.endsWith(".mdx"));
 
-  return files
-    .filter((file) => file.endsWith(".mdx"))
-    .map((filename) => {
-      const slug = filename.replace(".mdx", "");
-      const content = fs.readFileSync(path.join(directory, filename), "utf-8");
-      const { data } = matter(content);
-      return {
-        slug,
-        title: data.title || "Untitled",
-        date: data.date || "",
-        excerpt: data.excerpt || "",
-        coverImage: data.coverImage || "",
-        tags: data.tags || [],
-      };
-    })
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const allPosts = files.map((filename) => {
+    const slug = filename.replace(".mdx", "");
+    const fileContent = fs.readFileSync(
+      path.join(directory, filename),
+      "utf-8"
+    );
+    const { data } = matter(fileContent);
+
+    return {
+      slug,
+      title: data.title || "Untitled",
+      date: String(data.date || ""), // ✅ ensure it's a string
+      excerpt: data.excerpt || "",
+      coverImage: data.coverImage || "",
+      tags: data.tags || [],
+      author: data.author || "",
+      authorImage: data.authorImage || "",
+    };
+  });
+
+  const sortedPosts = allPosts.sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
+
+  const totalPages = Math.ceil(sortedPosts.length / pageSize);
+  const start = (page - 1) * pageSize;
+  const paginated = sortedPosts.slice(start, start + pageSize);
+
+  return {
+    posts: paginated,
+    totalPages,
+  };
 }
