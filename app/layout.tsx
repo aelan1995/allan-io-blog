@@ -42,9 +42,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={lato.className}>
-      <head>
-        <meta property="fb:app_id" content="1602434773753602" />
-      </head>
       <body className="text-white">
         {children}
         <Analytics />
