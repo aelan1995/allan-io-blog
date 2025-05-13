@@ -15,7 +15,7 @@ export default function Head() {
       />
       <meta
         property="og:image"
-        content="https://allan-io-blog.vercel.app/images/og-cover.jpg"
+        content="https://allan-io-blog.vercel.app/images/og-cover.png"
       />
       <meta property="og:url" content="https://allan-io-blog.vercel.app/" />
       <meta property="og:type" content="website" />
@@ -29,7 +29,7 @@ export default function Head() {
       />
       <meta
         name="twitter:image"
-        content="https://allan-io-blog.vercel.app/images/og-cover.jpg"
+        content="https://allan-io-blog.vercel.app/images/og-cover.png"
       />
     </>
   );
