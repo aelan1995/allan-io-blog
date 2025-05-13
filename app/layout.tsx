@@ -33,6 +33,9 @@ export const metadata = {
     description: "Explore developer-focused blog posts generated with AI.",
     images: ["/images/og-cover.png"],
   },
+  other: {
+    "fb:app_id": "1602434773753602",
+  },
 };
 
 export default function RootLayout({
