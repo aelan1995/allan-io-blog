@@ -1,4 +1,5 @@
-import { getPosts as getPostsServer } from "@/lib/getPosts";
+// app/api/posts/route.ts
+import { getPosts } from "@/lib/getPosts";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -6,7 +7,8 @@ export async function GET(request: Request) {
   const page = parseInt(searchParams.get("page") ?? "1", 10);
   const pageSize = parseInt(searchParams.get("pageSize") ?? "2", 10);
 
-  const { posts, totalPages } = getPostsServer(page, pageSize);
+  // Await the result of getPosts
+  const { posts, totalPages } = await getPosts(page, pageSize);
 
   return NextResponse.json({ posts, totalPages });
 }

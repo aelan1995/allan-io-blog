@@ -1,7 +1,13 @@
+// app/blog/[slug]/page.tsx
+
 import { notFound } from "next/navigation";
 import path from "path";
 import fs from "fs/promises";
-import BlogRenderer from "../../../components/BlogRenderer";
+import BlogRenderer from "@/components/BlogRenderer";
+
+interface Props {
+  params: { slug: string };
+}
 
 export async function generateStaticParams() {
   const dir = path.join(process.cwd(), "content/blog");
@@ -12,15 +18,14 @@ export async function generateStaticParams() {
     .map((file) => ({ slug: file.replace(".mdx", "") }));
 }
 
-export default async function Page(props: { params: Record<string, string> }) {
-  const { slug } = await Promise.resolve(props.params); // ✅ Await `params` object
-
+export default async function BlogPostPage({ params }: Props) {
+  const { slug } = params;
   const filePath = path.join(process.cwd(), "content/blog", `${slug}.mdx`);
 
   try {
-    await fs.access(filePath);
+    await fs.access(filePath); // Check if file exists
   } catch {
-    return notFound();
+    return notFound(); // Return a 404 if file doesn't exist
   }
 
   return <BlogRenderer slug={slug} />;

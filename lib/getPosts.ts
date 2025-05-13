@@ -14,13 +14,10 @@ export interface PostMeta {
   authorImage?: string;
 }
 
-export function getPosts(
+export async function getPosts(
   page: number,
   pageSize: number
-): {
-  posts: PostMeta[];
-  totalPages: number;
-} {
+): Promise<{ posts: PostMeta[]; totalPages: number }> {
   const directory = path.join(process.cwd(), "content/blog");
   const files = fs
     .readdirSync(directory)
@@ -37,7 +34,7 @@ export function getPosts(
     return {
       slug,
       title: data.title || "Untitled",
-      date: String(data.date || ""), // ✅ ensure it's a string
+      date: String(data.date || ""),
       excerpt: data.excerpt || "",
       coverImage: data.coverImage || "",
       tags: data.tags || [],
