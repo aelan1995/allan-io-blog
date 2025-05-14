@@ -1,10 +1,10 @@
 import Typesense from "typesense";
+import "dotenv/config"; // this enables local dev only, not needed in CI but safe
 
-// ✅ Validate or assert environment variables
-const host = process.env.NEXT_PUBLIC_TYPESENSE_HOST;
-const port = process.env.NEXT_PUBLIC_TYPESENSE_PORT;
-const protocol = process.env.NEXT_PUBLIC_TYPESENSE_PROTOCOL;
-const apiKey = process.env.NEXT_PUBLIC_TYPESENSE_SEARCH_ONLY_KEY;
+const host = process.env.TYPESENSE_HOST;
+const port = process.env.TYPESENSE_PORT;
+const protocol = process.env.TYPESENSE_PROTOCOL;
+const apiKey = process.env.TYPESENSE_API_KEY;
 
 if (!host || !port || !protocol || !apiKey) {
   throw new Error("Missing required Typesense environment variables");
