@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "sync:typesense": "ts-node --loader ts-node/esm scripts/syncPostsToTypesense.ts"
+    "sync:typesense": "ts-node --project tsconfig.scripts.json scripts/syncPostsToTypesense.ts"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.0",
@@ -37,6 +37,6 @@
     "eslint-config-next": "15.3.2",
     "tailwindcss": "^4",
     "ts-node": "^10.9.2",
-    "typescript": "^5"
+    "typescript": "^5.8.3"
   }
 }
