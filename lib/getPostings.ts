@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 
-function getAllPostings() {
+export function getAllPostings() {
   const directory = path.join(process.cwd(), "content/blog");
 
   const files = fs
@@ -29,5 +29,3 @@ function getAllPostings() {
 
   return posts;
 }
-
-module.exports = { getAllPostings };

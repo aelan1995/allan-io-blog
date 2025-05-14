@@ -1,5 +1,5 @@
-const { getAllPostings } = require("../lib/getPostings");
-const { typesenseClient } = require("../lib/typesenseClient");
+import { getAllPostings } from "../lib/getPostings";
+import { typesenseClient } from "../lib/typesenseClient";
 
 async function syncPosts() {
   const posts = getAllPostings();
